@@ -75,6 +75,13 @@ public class PlayerController : MonoBehaviour
         TextMeshProUGUI shieldText = 
             GameObject.Find("Canvas").transform.Find("ShieldCapacityText").GetComponent<TextMeshProUGUI>();
         shieldText.text = " Shield: " + (shieldCapacity*100).ToString() + "%";
+
+        //sprawdzamy czy poziom się zakończył i czy musimy wyświetlić ekran końcowy
+        if(levelManagerObject.GetComponent<LevelManager>().levelComplete) 
+        {
+            //znajdz canvas (interfejs), znajdz w nim ekran konca poziomu i go włącz
+            GameObject.Find("Canvas").transform.Find("LevelCompleteScreen").gameObject.SetActive(true);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -91,6 +98,17 @@ public class PlayerController : MonoBehaviour
             //popchnij asteroide
             asteroid.GetComponent<Rigidbody>().AddForce(shieldForce * 5, ForceMode.Impulse);
             shieldCapacity -= 0.25f;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //jeżeli dotkniemy znacnzika końca poziomu to ustaw w levelmanager flagę,
+        //że poziom jest ukończony
+        if(other.transform.CompareTag("LevelExit"))
+        {
+            //z obiektu LevelManager wyciągnij skrypt LevelManager i ustaw flagę
+            levelManagerObject.GetComponent<LevelManager>().levelComplete = true;
         }
     }
 }
