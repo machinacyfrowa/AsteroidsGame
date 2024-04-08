@@ -35,4 +35,14 @@ public class LevelManager : MonoBehaviour
     {
         
     }
+    //funkcja jest utuchamiana kiedy dany poziom (level) jest zakoñczony sukcesem
+    public void OnSuccess()
+    {
+        //zatrzymaj fizykê gry
+        Time.timeScale = 0f;
+        //ustaw flagê - poziom zakoñczony
+        levelComplete = true;
+        //odegraj dŸwiêk koñca poziomu
+        Camera.main.transform.Find("LevelCompleteSound").GetComponent<AudioSource>().Play();
+    }
 }

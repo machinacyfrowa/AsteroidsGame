@@ -116,10 +116,10 @@ public class PlayerController : MonoBehaviour
     {
         //jeżeli dotkniemy znacnzika końca poziomu to ustaw w levelmanager flagę,
         //że poziom jest ukończony
-        if(other.transform.CompareTag("LevelExit"))
+        if (other.transform.CompareTag("LevelExit"))
         {
-            //z obiektu LevelManager wyciągnij skrypt LevelManager i ustaw flagę
-            levelManagerObject.GetComponent<LevelManager>().levelComplete = true;
+            //wywołaj dla LevelManager metodę zakończenia poziomu
+            levelManagerObject.GetComponent<LevelManager>().OnSuccess();
         }
     }
 }
