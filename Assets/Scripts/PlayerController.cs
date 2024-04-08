@@ -72,9 +72,9 @@ public class PlayerController : MonoBehaviour
         transform.Find("NavUI").Find("TargetMarker").LookAt(target);
         //zmien ilosc procentwo widoczna w interfejsie
         //TODO: poprawić wyświetlanie stanu osłon!
-        TextMeshPro shieldText = 
-            GameObject.Find("Canvas").transform.Find("ShieldCapacityText").GetComponent<TextMeshPro>();
-        shieldText.text = " Shield: " + shieldCapacity.ToString() + "%";
+        TextMeshProUGUI shieldText = 
+            GameObject.Find("Canvas").transform.Find("ShieldCapacityText").GetComponent<TextMeshProUGUI>();
+        shieldText.text = " Shield: " + (shieldCapacity*100).ToString() + "%";
     }
 
     private void OnCollisionEnter(Collision collision)
