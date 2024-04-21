@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -11,11 +12,20 @@ public class PlayerController : MonoBehaviour
     GameObject levelManagerObject;
     //stan osłon w procentach (1=100%)
     float shieldCapacity = 1;
+    //płomień silnika
+    GameObject engineFlame;
+    //odgłos silnika
+    GameObject engineSound;
+    //wizualna osłona
+    GameObject shieldSphere;
 
     // Start is called before the first frame update
     void Start()
     {
         levelManagerObject = GameObject.Find("LevelManager");
+        engineFlame = transform.Find("EngineFlame").gameObject;
+        engineSound = transform.Find("EngineSound").gameObject;
+        shieldSphere = transform.Find("ShieldSphere").gameObject;
     }
 
     // Update is called once per frame
@@ -59,6 +69,18 @@ public class PlayerController : MonoBehaviour
         //dodaj obrót do obiektu
         //nie możemy użyć += ponieważ unity używa Quaternionów do zapisu rotacji
         transform.Rotate(rotation);
+
+        //dostosuj wielkość płomienia silnika do ilości dodanego "gazu", tylko dla dodatnich
+        engineFlame.transform.localScale = Vector3.one * Mathf.Max(Input.GetAxis("Vertical"), 0);
+
+        //dostosuj głośność odłosu silnika j.w.
+        engineSound.GetComponent<AudioSource>().volume = Mathf.Max(Input.GetAxis("Vertical"), 0);
+
+        //pasywna regeneracja osłon
+        if(shieldCapacity < 1)
+            shieldCapacity += Time.deltaTime / 100;
+
+        //zaktualizuj interfejs
         UpdateUI();
     }
 
@@ -74,7 +96,7 @@ public class PlayerController : MonoBehaviour
         //TODO: poprawić wyświetlanie stanu osłon!
         TextMeshProUGUI shieldText = 
             GameObject.Find("Canvas").transform.Find("ShieldCapacityText").GetComponent<TextMeshProUGUI>();
-        shieldText.text = " Shield: " + (shieldCapacity*100).ToString() + "%";
+        shieldText.text = " Shield: " + (shieldCapacity*100).ToString("F0") + "%";
 
         //sprawdzamy czy poziom się zakończył i czy musimy wyświetlić ekran końcowy
         if(levelManagerObject.GetComponent<LevelManager>().levelComplete) 
@@ -104,6 +126,8 @@ public class PlayerController : MonoBehaviour
             //popchnij asteroide
             asteroid.GetComponent<Rigidbody>().AddForce(shieldForce * 5, ForceMode.Impulse);
             shieldCapacity -= 0.25f;
+            //błyśnij osłonami
+            ShieldFlash();
             if(shieldCapacity <= 0)
             {
                 //poinformuj level manager, że gra się skończyła bo nie mamy osłon
@@ -121,5 +145,14 @@ public class PlayerController : MonoBehaviour
             //wywołaj dla LevelManager metodę zakończenia poziomu
             levelManagerObject.GetComponent<LevelManager>().OnSuccess();
         }
+    }
+    private void ShieldFlash()
+    {
+        shieldSphere.SetActive(true);
+        Invoke("ShieldOff", 1);
+    }
+    void ShieldOff()
+    {
+        shieldSphere.SetActive(false);
     }
 }
