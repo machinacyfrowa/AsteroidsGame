@@ -1999,6 +1999,7 @@ MonoBehaviour:
   staticAsteroid: {fileID: 6739600229080997576, guid: 8c1865fa01a85f74f906e65230a4d727, type: 3}
   spawnDistance: 20
   safeDistance: 10
+  cooldown: 0
 --- !u!4 &1622728105
 Transform:
   m_ObjectHideFlags: 0
@@ -2044,8 +2045,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   staticAsteroid: {fileID: 3023053443399606469, guid: 65f32cadf4a6b6248b1a3aea8c4dc84b, type: 3}
-  spawnDistance: 20
+  spawnDistance: 25
   safeDistance: 5
+  cooldown: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
