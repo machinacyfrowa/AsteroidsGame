@@ -1976,6 +1976,7 @@ GameObject:
   - component: {fileID: 1622728105}
   - component: {fileID: 1622728104}
   - component: {fileID: 1622728106}
+  - component: {fileID: 1622728107}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -2030,6 +2031,21 @@ MonoBehaviour:
   exitPrefab: {fileID: 7717256422880585266, guid: acc39b95261a67f40a2d06b2a8b72170, type: 3}
   levelComplete: 0
   levelFailed: 0
+--- !u!114 &1622728107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622728103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daa4d3c2f3ddf1e48802d482d4a68f01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  staticAsteroid: {fileID: 3023053443399606469, guid: 65f32cadf4a6b6248b1a3aea8c4dc84b, type: 3}
+  spawnDistance: 20
+  safeDistance: 5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
